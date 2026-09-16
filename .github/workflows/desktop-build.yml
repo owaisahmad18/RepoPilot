@@ -61,6 +61,6 @@ jobs:
         shell: bash
         run: |
           mapfile -d '' files < <(find artifacts -type f -print0)
-          gh release create "$GITHUB_REF_NAME" "${files[@]}" --generate-notes
+          gh release create "$GITHUB_REF_NAME" "${files[@]}" --generate-notes --repo "$GITHUB_REPOSITORY"
         env:
           GH_TOKEN: ${{ github.token }}
