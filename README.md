@@ -1,10 +1,12 @@
 # RepoPilot
 
+**RepoPilot is an agentic desktop app builder that turns public GitHub repositories into guided, reusable applications.**
+
 [![CI](https://github.com/owaisahmad18/RepoPilot/actions/workflows/ci.yml/badge.svg)](https://github.com/owaisahmad18/RepoPilot/actions/workflows/ci.yml)
 [![Desktop builds](https://github.com/owaisahmad18/RepoPilot/actions/workflows/desktop-build.yml/badge.svg)](https://github.com/owaisahmad18/RepoPilot/actions/workflows/desktop-build.yml)
 [![Latest release](https://img.shields.io/github/v/release/owaisahmad18/RepoPilot?label=download)](https://github.com/owaisahmad18/RepoPilot/releases/latest)
 
-RepoPilot turns a public GitHub repository into a guided desktop applet for people who do not want to work with source code or command lines. It discovers useful repository capabilities, builds human-friendly controls, prepares isolated setups, and runs a selected task only after explicit confirmation.
+RepoPilot combines deterministic repository analysis with an optional OpenAI, Claude, or Gemini agent. The agent discovers useful capabilities, proposes workflows and human-friendly controls, validates its plan, attempts one repair when needed, and falls back safely. Repository code runs only after explicit user confirmation.
 
 The same renderer powers a lightweight browser preview and the Electron desktop application.
 
