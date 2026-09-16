@@ -29,5 +29,7 @@ test("reuses an existing checkout without requiring a progress callback", async 
 test("uses a short stable checkout key for repositories", () => {
   const repository = parseGitHubUrl("https://github.com/significant-gravitas/autogpt");
   assert.match(repositoryKey(repository), /^[a-f0-9]{16}$/);
-  assert.equal(checkoutPath("C:\\very-long-project-name\\.repo-gui", repository).length < 120, true);
+  const storageRoot = path.join(os.tmpdir(), "very-long-project-name", ".repo-gui");
+  const relativeCheckout = path.relative(storageRoot, checkoutPath(storageRoot, repository));
+  assert.equal(relativeCheckout.length < 100, true);
 });
