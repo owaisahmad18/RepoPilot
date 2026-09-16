@@ -14,11 +14,11 @@ The same renderer powers a lightweight browser preview and the Electron desktop 
 
 Download the latest desktop build from [GitHub Releases](https://github.com/owaisahmad18/RepoPilot/releases/latest).
 
-| Operating system | Package |
-| --- | --- |
-| Windows | `.exe` installer |
-| macOS | `.dmg` disk image |
-| Linux | `.AppImage` portable app |
+| Operating system | Direct download | Platform folder |
+| --- | --- | --- |
+| Windows x64 | [Download `.exe`](https://github.com/owaisahmad18/RepoPilot/releases/download/v0.1.2/RepoPilot.Setup.0.1.2.exe) | [Windows](Windows/) |
+| macOS Apple Silicon | [Download `.dmg`](https://github.com/owaisahmad18/RepoPilot/releases/download/v0.1.2/RepoPilot-0.1.2-arm64.dmg) | [macOS](macOS/) |
+| Linux x64 | [Download `.AppImage`](https://github.com/owaisahmad18/RepoPilot/releases/download/v0.1.2/RepoPilot-0.1.2.AppImage) | [Linux](Linux/) |
 
 These early builds are unsigned. Windows and macOS may show an unrecognized-developer warning; review the source and release notes before allowing the app to run.
 
