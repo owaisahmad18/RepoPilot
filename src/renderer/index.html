@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:" />
+    <title>RepoPilot</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="history-controls" aria-label="Page navigation">
+        <button id="nav-back" class="nav-button" type="button" aria-label="Back to repository selection" disabled>←</button>
+        <button id="nav-forward" class="nav-button" type="button" aria-label="Forward to repository interface" disabled>→</button>
+      </div>
+      <strong class="brand">RepoPilot</strong>
+      <span id="step-indicator" class="step-indicator">1 / 2 · Repository</span>
+      <button id="sidebar-toggle" class="sidebar-toggle" type="button" aria-controls="workspace-sidebar" aria-expanded="false">Applets & accounts</button>
+    </header>
+
+    <main>
+      <section id="repo-page" class="page" aria-labelledby="repo-page-title">
+        <div class="page-heading">
+          <p class="section-label">Repository</p>
+          <h1 id="repo-page-title">Choose a repository</h1>
+          <p>Search by what you want to accomplish, or paste a public GitHub repository.</p>
+        </div>
+
+        <section class="workspace-picker" aria-label="Working folder">
+          <div>
+            <span class="section-label">Working folder</span>
+            <strong id="workspace-name">Loading…</strong>
+            <p id="workspace-status">Every repository gets its own folder for the applet, setup, inputs, and results.</p>
+          </div>
+          <button id="choose-workspace" type="button">Choose folder</button>
+        </section>
+
+        <section class="search-panel" aria-label="Repository search">
+          <h2>Find a repository</h2>
+          <form id="search-form" class="search-form">
+            <label class="sr-only" for="search-goal">What do you want to do?</label>
+            <input id="search-goal" type="search" placeholder="For example: Segment cells in microscope images" autocomplete="off" />
+            <button id="search-button" type="submit">Search GitHub</button>
+          </form>
+          <p id="search-status" class="status"></p>
+          <div id="search-results" class="search-results hidden"></div>
+        </section>
+
+        <div class="choice-divider"><span>or</span></div>
+
+        <section class="repo-input" aria-label="Repository input">
+          <h2>Add a repository</h2>
+          <label class="sr-only" for="repo-url">GitHub repository</label>
+          <div class="input-row">
+            <input id="repo-url" type="url" placeholder="https://github.com/owner/project" autocomplete="off" />
+            <button id="analyze-button" type="button">Create interface</button>
+          </div>
+          <p id="status" class="status">Ready.</p>
+        </section>
+      </section>
+
+      <section id="interface-page" class="page hidden" aria-labelledby="active-repo-name">
+        <div class="interface-header">
+          <div class="active-repository">
+            <p class="section-label">Current applet</p>
+            <h1 id="active-repo-name">Repository interface</h1>
+            <p id="repo-profile" class="repo-profile"></p>
+          </div>
+          <nav id="view-switch" class="view-switch hidden" aria-label="Interface mode">
+            <button id="assistant-view-button" class="view-button active" type="button" aria-pressed="true">Assistant</button>
+            <button id="manual-view-button" class="view-button" type="button" aria-pressed="false">Manual</button>
+          </nav>
+        </div>
+
+        <section id="agent-panel" class="agent-panel hidden" aria-label="Repository assistant">
+          <div class="agent-heading">
+            <div>
+              <p class="section-label">Assistant</p>
+              <h2>What would you like to do?</h2>
+            </div>
+            <span class="agent-mode">Plans only</span>
+          </div>
+          <div id="agent-conversation" class="agent-conversation" aria-live="polite"></div>
+          <form id="agent-form" class="agent-form">
+            <label class="sr-only" for="agent-input">Describe the result you want</label>
+            <input id="agent-input" type="text" placeholder="Describe the result you want" autocomplete="off" />
+            <label class="agent-attach" for="agent-files">
+              Attach files
+              <input id="agent-files" class="sr-only" type="file" multiple />
+            </label>
+            <button id="agent-send" type="submit">Plan task</button>
+            <span id="agent-attachment-status" class="agent-attachment-status">No files attached</span>
+          </form>
+        </section>
+
+        <section id="workspace" class="workspace hidden">
+          <aside class="task-sidebar">
+            <p class="section-label">Tasks</p>
+            <div id="command-list" class="command-list"></div>
+          </aside>
+
+          <div class="command-panel">
+            <div id="empty-command" class="empty-state">
+              <h2>No safe interface generated</h2>
+              <p id="empty-explanation">This repository needs another language or capability adapter.</p>
+            </div>
+            <form id="command-form" class="hidden">
+              <div class="command-heading">
+                <div>
+                  <p id="command-entry" class="section-label"></p>
+                  <h2 id="command-title"></h2>
+                  <p id="command-description" class="muted"></p>
+                </div>
+                <span id="confidence" class="badge"></span>
+              </div>
+              <div id="compatibility" class="compatibility"></div>
+              <div id="fields" class="fields"></div>
+              <label class="safety-note" for="execution-consent">
+                <input id="execution-consent" type="checkbox" required />
+                <span><strong>Allow this task to run.</strong> Repository code can access files and network resources allowed by your computer.</span>
+              </label>
+              <button id="run-button" class="run-button" type="submit">Confirm and run task</button>
+            </form>
+          </div>
+
+          <section class="output-panel" aria-label="Command output">
+            <div class="output-heading">
+              <p class="section-label">Results</p>
+              <button id="clear-output" class="text-button" type="button">Clear</button>
+            </div>
+            <pre id="output">Results will appear here.</pre>
+            <div id="output-artifacts" class="output-artifacts"></div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <button id="sidebar-backdrop" class="sidebar-backdrop" type="button" aria-label="Close sidebar"></button>
+    <aside id="workspace-sidebar" class="workspace-sidebar" aria-label="Applets and accounts">
+      <div class="sidebar-heading">
+        <div>
+          <p class="section-label">Library</p>
+          <h2>Workspace</h2>
+        </div>
+        <button id="sidebar-close" class="sidebar-close" type="button" aria-label="Close sidebar">×</button>
+      </div>
+      <nav class="sidebar-tabs" aria-label="Sidebar section">
+        <button id="sidebar-tab-applets" class="sidebar-tab active" type="button" aria-pressed="true">Applets</button>
+        <button id="sidebar-tab-accounts" class="sidebar-tab" type="button" aria-pressed="false">Accounts</button>
+      </nav>
+      <div id="sidebar-panel-applets" class="sidebar-panel">
+        <form id="applet-save-form" class="applet-save-form hidden">
+          <label class="sr-only" for="applet-name">Applet name</label>
+          <input id="applet-name" type="text" maxlength="80" placeholder="Applet name" />
+          <button type="submit">Save</button>
+        </form>
+        <div id="applet-list" class="applet-list" aria-live="polite">
+          <p class="sidebar-empty">No saved applets yet.</p>
+        </div>
+      </div>
+      <div id="sidebar-panel-accounts" class="sidebar-panel hidden">
+        <p class="account-intro">Connect an assistant account or API key.</p>
+        <div id="connections-list" class="connections-list" aria-live="polite">
+          <p class="sidebar-empty">Checking accounts…</p>
+        </div>
+        <p class="connections-security">Keys stay in memory for this session and are hidden from repository processes.</p>
+      </div>
+    </aside>
+
+    <div id="applet-context-menu" class="applet-context-menu hidden" role="menu">
+      <button id="delete-applet-menu" type="button" role="menuitem">Delete applet</button>
+    </div>
+
+    <dialog id="delete-applet-dialog" class="delete-applet-dialog" aria-labelledby="delete-applet-title">
+      <h2 id="delete-applet-title">Delete this applet?</h2>
+      <p><strong id="delete-applet-name"></strong> and all of its local files—including the repository, setup, inputs, and results—will be permanently removed.</p>
+      <div class="dialog-actions">
+        <button id="delete-applet-no" type="button">No, keep it</button>
+        <button id="delete-applet-yes" class="danger-button" type="button">Yes, delete</button>
+      </div>
+    </dialog>
+
+    <script src="annotation-compat.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

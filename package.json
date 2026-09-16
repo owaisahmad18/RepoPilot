@@ -1,0 +1,50 @@
+{
+  "name": "repopilot",
+  "version": "0.1.0",
+  "description": "Turn public GitHub repositories into safe, reusable desktop applets.",
+  "license": "MIT",
+  "keywords": ["agent", "desktop", "electron", "github", "gui", "repository"],
+  "main": "src/main.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "electron .",
+    "web": "node src/server.js",
+    "package:windows": "electron-builder --win nsis",
+    "package:mac": "electron-builder --mac dmg",
+    "package:linux": "electron-builder --linux AppImage",
+    "check:release": "node scripts/releaseCheck.js",
+    "test": "node --test",
+    "test:science": "node scripts/scienceSmoke.js",
+    "test:image-domains": "node scripts/imageDomainSmoke.js",
+    "verify": "npm run check:release && npm test"
+  },
+  "devDependencies": {
+    "electron": "^44.3.0",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "dev.repopilot.desktop",
+    "productName": "RepoPilot",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Utility"
+    }
+  }
+}

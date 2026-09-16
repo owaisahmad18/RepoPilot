@@ -1,0 +1,17 @@
+node_modules/
+dist/
+release/
+coverage/
+.repo-gui/
+.repopilot/
+npm-debug.log*
+*.log
+.env
+.env.*
+.npmrc
+*.key
+*.pem
+*.p12
+*.pfx
+.DS_Store
+Thumbs.db
