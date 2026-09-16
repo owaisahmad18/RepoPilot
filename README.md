@@ -1,8 +1,24 @@
 # RepoPilot
 
+[![CI](https://github.com/owaisahmad18/RepoPilot/actions/workflows/ci.yml/badge.svg)](https://github.com/owaisahmad18/RepoPilot/actions/workflows/ci.yml)
+[![Desktop builds](https://github.com/owaisahmad18/RepoPilot/actions/workflows/desktop-build.yml/badge.svg)](https://github.com/owaisahmad18/RepoPilot/actions/workflows/desktop-build.yml)
+[![Latest release](https://img.shields.io/github/v/release/owaisahmad18/RepoPilot?label=download)](https://github.com/owaisahmad18/RepoPilot/releases/latest)
+
 RepoPilot turns a public GitHub repository into a guided desktop applet for people who do not want to work with source code or command lines. It discovers useful repository capabilities, builds human-friendly controls, prepares isolated setups, and runs a selected task only after explicit confirmation.
 
 The same renderer powers a lightweight browser preview and the Electron desktop application.
+
+## Download
+
+Download the latest desktop build from [GitHub Releases](https://github.com/owaisahmad18/RepoPilot/releases/latest).
+
+| Operating system | Package |
+| --- | --- |
+| Windows | `.exe` installer |
+| macOS | `.dmg` disk image |
+| Linux | `.AppImage` portable app |
+
+These early builds are unsigned. Windows and macOS may show an unrecognized-developer warning; review the source and release notes before allowing the app to run.
 
 ## Highlights
 
