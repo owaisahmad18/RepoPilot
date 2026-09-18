@@ -1,12 +1,20 @@
 const { contextBridge, ipcRenderer, webUtils } = require("electron");
-const path = require("node:path");
+
+function parentDirectory(filePath) {
+  const value = String(filePath || "").replace(/[\\/]+$/, "");
+  const separator = Math.max(value.lastIndexOf("/"), value.lastIndexOf("\\"));
+  if (separator < 0) return value;
+  if (separator === 2 && /^[A-Za-z]:/.test(value)) return `${value.slice(0, separator)}\\`;
+  return value.slice(0, separator) || value[0] || "";
+}
+
 
 function directoryPath(files) {
   const first = files?.[0];
   if (!first) return "";
   let result = webUtils.getPathForFile(first);
   const relativeParts = String(first.webkitRelativePath || first.name).split(/[\\/]/).filter(Boolean);
-  for (let index = 1; index < relativeParts.length; index += 1) result = path.dirname(result);
+  for (let index = 1; index < relativeParts.length; index += 1) result = parentDirectory(result);
   return result;
 }
 

@@ -75,6 +75,19 @@ let appletPendingDeletion = null;
 const searchPageSize = 5;
 const browserOutputListeners = [];
 
+const desktopBridgeMissing = window.location.protocol === "file:" && !window.repoGui;
+const desktopBridgeError = () => Promise.reject(new Error(
+  "RepoPilot desktop services did not start. Restart the app or install the latest release.",
+));
+const unavailableDesktopBridge = new Proxy({
+  onProgress: () => {},
+  onOutput: () => {},
+}, {
+  get(target, property) {
+    return target[property] || desktopBridgeError;
+  },
+});
+
 const bridge = window.repoGui ? {
   initialInterface: window.repoGui.initialInterface,
   workspace: window.repoGui.workspace,
@@ -97,7 +110,7 @@ const bridge = window.repoGui ? {
   onOutput: window.repoGui.onOutput,
   upload: async (file) => window.repoGui.filePath(file),
   uploadDirectory: async (files) => window.repoGui.directoryPath(files),
-} : {
+} : desktopBridgeMissing ? unavailableDesktopBridge : {
   initialInterface: async () => ({ spec: null }),
   workspace: async () => getJson("/api/workspace"),
   chooseWorkspace: async () => postJson("/api/workspace/choose", {}),
